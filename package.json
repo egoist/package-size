@@ -21,7 +21,13 @@
     "cli.js"
   ],
   "keywords": [
-    ""
+    "webpack",
+    "bundle",
+    "stat",
+    "tool",
+    "analysis",
+    "minify",
+    "gzip"
   ],
   "devDependencies": {
     "eslint": "^3.12.2",

@@ -81,20 +81,27 @@ function runWebpack(config) {
 }
 
 module.exports = function (packages, options) {
-  const spinner = ora('Prepare...').start()
+  const spinner = ora()
   const cacheDir = ensureCachePath()
 
-  let toInstall = []
-  packages.forEach(name => {
-    if (name.indexOf(',') === -1) {
-      toInstall.push(name)
-    } else {
-      toInstall = toInstall.concat(name.split(','))
-    }
-  })
+  // install packages if not going to bundle in cwd
+  if (options.cwd) {
+    spinner.text = 'Bundle...'
+    spinner.start()
+  } else {
+    spinner.text = 'Prepare...'
+    spinner.start()
 
-  spinner.text = 'Bundling...'
-  install(toInstall, {cwd: cacheDir, stdio: 'ignore'})
+    let toInstall = []
+    packages.forEach(name => {
+      if (name.indexOf(',') === -1) {
+        toInstall.push(name)
+      } else {
+        toInstall = toInstall.concat(name.split(','))
+      }
+    })
+    install(toInstall, {cwd: cacheDir, stdio: 'ignore'})
+  }
 
   const exclude = options.es6 ? [] : [/node_modules/]
 
@@ -105,7 +112,9 @@ module.exports = function (packages, options) {
     }, {}),
     resolve: {
       modules: [
-        path.join(cacheDir, 'node_modules')
+        options.cwd ?
+          path.join(process.cwd(), 'node_modules') :
+          path.join(cacheDir, 'node_modules')
       ]
     },
     performance: {
@@ -131,6 +140,8 @@ module.exports = function (packages, options) {
       filename: '[name].js'
     }
   }
+
+  spinner.text = 'Bundle...'
 
   Promise.all([
     runWebpack(getDevConfig(config)),

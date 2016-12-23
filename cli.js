@@ -10,6 +10,7 @@ const cli = cac()
 cli.command('*', pkg.description, main)
 
 cli.option('es6', 'Compile the input package down to ES5')
+cli.option('cwd', 'Bundle package in current working directory')
 
 cli.parse()
 
