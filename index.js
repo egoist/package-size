@@ -85,7 +85,6 @@ module.exports = function (packages, options) {
   const cacheDir = ensureCachePath()
 
   let toInstall = []
-
   packages.forEach(name => {
     if (name.indexOf(',') === -1) {
       toInstall.push(name)
@@ -132,12 +131,6 @@ module.exports = function (packages, options) {
       filename: '[name].js'
     }
   }
-
-  const compiler = webpack([
-    getDevConfig(config),
-    getProdConfig(config)
-  ])
-  compiler.outputFileSystem = new MemoryFS()
 
   Promise.all([
     runWebpack(getDevConfig(config)),
