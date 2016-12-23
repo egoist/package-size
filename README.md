@@ -39,6 +39,8 @@ If the package contains ES6 code, please use `--es6` option, otherwise it will t
 
 Packages will be cached at `~/.package-size-cache` and we use [yarn-install](https://github.com/egoist/yarn-install) to install them, if [Yarn](https://yarnpkg.com/) is not available on your machine, it automatically fallbacks to `npm install`.
 
+Something like `package-size react@0.14 react@15` will not work correctly, since they're installed at the same time, one version for one package at a time. (PR for fixing this is welcome)
+
 ## Contributing
 
 1. Fork it!

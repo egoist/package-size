@@ -14,7 +14,6 @@ const merge = require('webpack-merge')
 const Gzip = require('compression-webpack-plugin')
 const getWidth = require('string-width')
 const find = require('lodash.find')
-const pSeries = require('p-series')
 
 function ensureCachePath() {
   const dir = path.join(home, '.package-size-cache')
@@ -177,9 +176,9 @@ module.exports = function (packages, options) {
 
   spinner.text = 'Bundle...'
 
-  return pSeries([
-    () => runWebpack(getDevConfig(config)),
-    () => runWebpack(getProdConfig(config))
+  return Promise.all([
+    runWebpack(getDevConfig(config)),
+    runWebpack(getProdConfig(config))
   ]).then(([devStats, prodStats]) => {
     spinner.stop()
 
