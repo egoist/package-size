@@ -7,7 +7,12 @@ const pkg = require('./package.json')
 
 const cli = cac()
 
-cli.command('*', pkg.description, main)
+cli.command('*', pkg.description, (input, flags) => {
+  return main(input, flags).catch(err => {
+    console.log(err.stack)
+    process.exit(1)
+  })
+})
 
 cli.option('es6', 'Compile the input package down to ES5')
 cli.option('cwd', 'Bundle package in current working directory')

@@ -143,7 +143,7 @@ module.exports = function (packages, options) {
 
   spinner.text = 'Bundle...'
 
-  Promise.all([
+  return Promise.all([
     runWebpack(getDevConfig(config)),
     runWebpack(getProdConfig(config))
   ]).then(([devStats, prodStats]) => {
@@ -172,8 +172,5 @@ module.exports = function (packages, options) {
     }).replace(/^/gm, '  ')
     console.log(statTable)
     console.log()
-  }).catch(err => {
-    console.log(err.stack)
-    process.exit(1)
   })
 }
