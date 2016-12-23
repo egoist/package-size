@@ -154,7 +154,9 @@ module.exports = function (packages, options) {
     runWebpack(getProdConfig(config))
   ]).then(([devStats, prodStats]) => {
     spinner.stop()
+
     handleError(prodStats)
+
     const devAssets = devStats.toJson().assets
     const prodAssets = prodStats.toJson().assets
 
@@ -163,8 +165,12 @@ module.exports = function (packages, options) {
       return [
         chalk.yellow(name), // package name
         prettyBytes(asset.size), // size
-        prettyBytes(find(prodAssets, {name: `${name}.js`}).size), // minified
-        prettyBytes(find(prodAssets, {name: `${name}.js.gz`}).size) // minified + gzipped
+        prettyBytes(find(prodAssets, v => {
+          return decodeURIComponent(v.name) === `${name}.js`
+        }).size), // minified
+        prettyBytes(find(prodAssets, v => {
+          return decodeURIComponent(v.name) === `${name}.js.gz`
+        }).size) // minified + gzipped
       ]
     })
 
