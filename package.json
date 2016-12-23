@@ -47,6 +47,7 @@
     "lodash.find": "^4.6.0",
     "memory-fs": "^0.4.1",
     "ora": "^0.4.0",
+    "p-series": "^1.0.0",
     "pretty-bytes": "^4.0.2",
     "string-width": "^2.0.0",
     "text-table": "^0.2.0",

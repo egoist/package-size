@@ -14,6 +14,7 @@ const merge = require('webpack-merge')
 const Gzip = require('compression-webpack-plugin')
 const getWidth = require('string-width')
 const find = require('lodash.find')
+const pSeries = require('p-series')
 
 function ensureCachePath() {
   const dir = path.join(home, '.package-size-cache')
@@ -84,9 +85,25 @@ function stripVersion(v) {
   return v.replace(/@[\s\S]+$/, '')
 }
 
+function parsePackageName(name) {
+  const matchVersion = /@([\s\S]+)$/
+  const matchPath = /(\/[\s\S]+)$/
+  const matchedVersion = name.match(matchVersion)
+  name = name.replace(matchVersion, '')
+  const matchedPath = name.match(matchPath)
+  name = name.replace(matchPath, '')
+  return {
+    name,
+    path: (matchedPath && matchedPath[1]) || '',
+    version: (matchedVersion && matchedVersion[1]) || ''
+  }
+}
+
 module.exports = function (packages, options) {
   const spinner = ora()
   const cacheDir = ensureCachePath()
+
+  const verbose = options.verbose
 
   // install packages if not going to bundle in cwd
   if (options.cwd) {
@@ -99,21 +116,36 @@ module.exports = function (packages, options) {
     let toInstall = []
     packages.forEach(name => {
       if (name.indexOf(',') === -1) {
-        toInstall.push(name)
+        const info = parsePackageName(name)
+        toInstall.push(info.name + (info.version ? `@${info.version}` : ''))
       } else {
-        toInstall = toInstall.concat(name.split(','))
+        toInstall = toInstall.concat(name.split(',').map(v => {
+          const info = parsePackageName(name)
+          return info.name + (info.version ? `@${info.version}` : '')
+        }))
       }
     })
-    install(toInstall, {cwd: cacheDir, stdio: 'ignore'})
+    const cmd = install(toInstall, {cwd: cacheDir, stdio: 'pipe', showCommand: verbose})
+    if (cmd.status !== 0) {
+      spinner.stop()
+      console.log(cmd.stderr.toString())
+      process.exit(cmd.status)
+    }
   }
 
   const exclude = options.es6 ? [] : [/node_modules/]
 
   const config = {
     entry: packages.reduce((current, next) => {
-      current[next] = next.indexOf(',') === -1 ?
-        stripVersion(next) :
-        next.split(',').map(stripVersion)
+      if (next.indexOf(',') === -1) {
+        const info = parsePackageName(next)
+        current[next] = info.name + info.path
+      } else {
+        current[next] = next.split(',').map(name => {
+          const info = parsePackageName(name)
+          return info.name + info.path
+        })
+      }
       return current
     }, {}),
     resolve: {
@@ -149,9 +181,9 @@ module.exports = function (packages, options) {
 
   spinner.text = 'Bundle...'
 
-  return Promise.all([
-    runWebpack(getDevConfig(config)),
-    runWebpack(getProdConfig(config))
+  return pSeries([
+    () => runWebpack(getDevConfig(config)),
+    () => runWebpack(getProdConfig(config))
   ]).then(([devStats, prodStats]) => {
     spinner.stop()
 
