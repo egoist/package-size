@@ -44,6 +44,7 @@
     "pretty-bytes": "^4.0.2",
     "string-width": "^2.0.0",
     "text-table": "^0.2.0",
+    "update-notifier": "^1.0.3",
     "user-home": "^2.0.0",
     "webpack-egoist": "^2.2.0-rc.2",
     "webpack-merge": "^2.0.0",
