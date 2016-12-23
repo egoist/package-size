@@ -31,6 +31,9 @@ package-size vue react,react-dom preact
 
 If the package contains ES6 code, please use `--es6` option, otherwise it will throw error.
 
+## How does it work
+
+Packages will be cached at `~/.package-size-cache` and we use [yarn-install](https://github.com/egoist/yarn-install) to install them, if [Yarn](https://yarnpkg.com/) is not available on your machine, it automatically fallbacks to `npm install`.
 
 ## Contributing
 
