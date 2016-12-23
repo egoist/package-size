@@ -80,6 +80,10 @@ function runWebpack(config) {
   })
 }
 
+function stripVersion(v) {
+  return v.replace(/@[\s\S]+$/, '')
+}
+
 module.exports = function (packages, options) {
   const spinner = ora()
   const cacheDir = ensureCachePath()
@@ -107,7 +111,9 @@ module.exports = function (packages, options) {
 
   const config = {
     entry: packages.reduce((current, next) => {
-      current[next] = next.indexOf(',') === -1 ? next : next.split(',')
+      current[next] = next.indexOf(',') === -1 ?
+        stripVersion(next) :
+        next.split(',').map(stripVersion)
       return current
     }, {}),
     resolve: {
