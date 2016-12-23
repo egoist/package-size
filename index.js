@@ -81,10 +81,6 @@ function runWebpack(config) {
   })
 }
 
-function stripVersion(v) {
-  return v.replace(/@[\s\S]+$/, '')
-}
-
 function parsePackageName(name) {
   const matchVersion = /@([\s\S]+)$/
   const matchPath = /(\/[\s\S]+)$/
@@ -120,7 +116,7 @@ module.exports = function (packages, options) {
         toInstall.push(info.name + (info.version ? `@${info.version}` : ''))
       } else {
         toInstall = toInstall.concat(name.split(',').map(v => {
-          const info = parsePackageName(name)
+          const info = parsePackageName(v)
           return info.name + (info.version ? `@${info.version}` : '')
         }))
       }
