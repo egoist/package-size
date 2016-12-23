@@ -10,7 +10,7 @@ const chalk = require('chalk')
 const MemoryFS = require('memory-fs')
 const table = require('text-table')
 const prettyBytes = require('pretty-bytes')
-const merge = require('lodash.merge')
+const merge = require('webpack-merge')
 const Gzip = require('compression-webpack-plugin')
 const getWidth = require('string-width')
 const find = require('lodash.find')
@@ -34,7 +34,7 @@ function getDevConfig(config) {
 }
 
 function getProdConfig(config) {
-  return merge({}, config, {
+  return merge(config, {
     plugins: [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
@@ -162,5 +162,8 @@ module.exports = function (packages, options) {
     }).replace(/^/gm, '  ')
     console.log(statTable)
     console.log()
+  }).catch(err => {
+    console.log(err.stack)
+    process.exit(1)
   })
 }
