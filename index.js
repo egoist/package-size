@@ -16,9 +16,15 @@ const getWidth = require('string-width')
 const find = require('lodash.find')
 
 function ensureCachePath() {
-  const dir = path.join(home, '.package-size')
+  const dir = path.join(home, '.package-size-cache')
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
+    const data = {
+      name: 'package-size-cache',
+      private: true,
+      license: 'MIT'
+    }
+    fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify(data), 'utf8')
   }
   return dir
 }
