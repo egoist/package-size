@@ -9,7 +9,11 @@ const cli = cac()
 
 cli.command('*', pkg.description, (input, flags) => {
   return main(input, flags).catch(err => {
-    console.log(err.stack)
+    if (err.name === 'WebpackOptionsValidationError') {
+      console.log(err.message)
+    } else {
+      console.log(err.stack)
+    }
     process.exit(1)
   })
 })

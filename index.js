@@ -14,6 +14,7 @@ const merge = require('webpack-merge')
 const Gzip = require('compression-webpack-plugin')
 const getWidth = require('string-width')
 const find = require('lodash.find')
+const parsePackageName = require('parse-package-name')
 
 function ensureCachePath() {
   const dir = path.join(home, '.package-size-cache')
@@ -80,20 +81,6 @@ function runWebpack(config) {
   })
 }
 
-function parsePackageName(name) {
-  const matchVersion = /@([\s\S]+)$/
-  const matchPath = /(\/[\s\S]+)$/
-  const matchedVersion = name.match(matchVersion)
-  name = name.replace(matchVersion, '')
-  const matchedPath = name.match(matchPath)
-  name = name.replace(matchPath, '')
-  return {
-    name,
-    path: (matchedPath && matchedPath[1]) || '',
-    version: (matchedVersion && matchedVersion[1]) || ''
-  }
-}
-
 module.exports = function (packages, options) {
   const spinner = ora()
   const cacheDir = ensureCachePath()
@@ -134,11 +121,11 @@ module.exports = function (packages, options) {
     entry: packages.reduce((current, next) => {
       if (next.indexOf(',') === -1) {
         const info = parsePackageName(next)
-        current[next] = info.name + info.path
+        current[next] = info.name + (info.path ? `/${info.path}` : '')
       } else {
         current[next] = next.split(',').map(name => {
           const info = parsePackageName(name)
-          return info.name + info.path
+          return info.name + (info.path ? `/${info.path}` : '')
         })
       }
       return current
