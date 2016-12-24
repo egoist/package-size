@@ -3,14 +3,21 @@
 const cac = require('cac')
 const update = require('update-notifier')
 const chalk = require('chalk')
+const ora = require('ora')
 const pkg = require('./package.json')
 
 const cli = cac()
 
 cli.command('*', pkg.description, (input, flags) => {
+  const spinner = ora('processing...')
   return require('./lib')(input, flags)
-  .then(require('./lib/print'))
+  .then(data => {
+    spinner.stop()
+    require('./lib/print')(data)
+  })
   .catch(err => {
+    spinner.text = 'failed'
+    spinner.fail()
     if (err.name === 'WebpackOptionsValidationError') {
       console.log(err.message)
     } else {
