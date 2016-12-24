@@ -9,7 +9,7 @@ const pkg = require('./package.json')
 const cli = cac()
 
 cli.command('*', pkg.description, (input, flags) => {
-  const spinner = ora('processing...')
+  const spinner = ora({text: 'Bundling...', spinner: 'arrow3'}).start()
   return require('./lib')(input, flags)
   .then(data => {
     spinner.stop()
