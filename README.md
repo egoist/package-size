@@ -86,7 +86,7 @@ The package to exclude from bundled file, for example, to get the bundle size of
 package-size styled-jsx/style --externals react
 ```
 
-Note that if some item in `externals` is provided as string, it will be converted to Regular Expression that starts with it. For example: `react` to `/^react/`
+Note that if some item in `externals` is provided as string, it will be wrapped in a regular expression. For example: `react` is treated as `/^react$/`
 
 ## Contributing
 
