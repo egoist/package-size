@@ -13,7 +13,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "eslint *.js"
+    "test": "eslint *.js lib/*.js"
   },
   "bin": "cli.js",
   "main": "./lib/index.js",
