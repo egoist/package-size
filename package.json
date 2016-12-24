@@ -13,7 +13,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "jest && eslint *.js lib/*.js"
+    "test": "ava && eslint *.js lib/*.js"
   },
   "bin": "cli.js",
   "main": "./lib/index.js",
@@ -31,9 +31,9 @@
     "gzip"
   ],
   "devDependencies": {
+    "ava": "^0.17.0",
     "eslint": "^3.12.2",
-    "eslint-config-rem": "^2.0.2",
-    "jest-cli": "^18.0.0"
+    "eslint-config-rem": "^2.0.2"
   },
   "jest": {
     "testEnvironment": "node"
