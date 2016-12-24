@@ -42,6 +42,23 @@ Packages will be cached at `~/.package-size-cache` and we use [yarn-install](htt
 
 Something like `package-size react@0.14 react@15` will not work correctly, since they're installed at the same time, it's supposed to be one version for one package at a time. (PR for fixing this is welcome)
 
+## API
+
+```js
+const getSizes = require('package-size')
+
+getSizes(['vue', 'react,react-dom', 'preact'])
+  .then(data => {
+    /*
+    [
+      ['vue', '{size}', '{minified size}', '{gzipped size}'],
+      ['react,react-dom', '{size}', '{minified size}', '{gzipped size}'],
+      ['preact', '{size}', '{minified size}', '{gzipped size}']
+    ]
+    */
+  })
+```
+
 ## Contributing
 
 1. Fork it!

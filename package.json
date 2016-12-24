@@ -16,8 +16,9 @@
     "test": "eslint *.js"
   },
   "bin": "cli.js",
+  "main": "./lib/index.js",
   "files": [
-    "index.js",
+    "lib",
     "cli.js"
   ],
   "keywords": [

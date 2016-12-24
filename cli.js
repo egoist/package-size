@@ -2,13 +2,14 @@
 'use strict'
 const cac = require('cac')
 const update = require('update-notifier')
-const main = require('./')
 const pkg = require('./package.json')
 
 const cli = cac()
 
 cli.command('*', pkg.description, (input, flags) => {
-  return main(input, flags).catch(err => {
+  return require('./lib')(input, flags)
+  .then(require('./lib/print'))
+  .catch(err => {
     if (err.name === 'WebpackOptionsValidationError') {
       console.log(err.message)
     } else {
