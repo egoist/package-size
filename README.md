@@ -47,7 +47,7 @@ Something like `package-size react@0.14 react@15` will not work correctly, since
 ```js
 const getSizes = require('package-size')
 
-getSizes(['vue', 'react,react-dom', 'preact'])
+getSizes(['vue', 'react,react-dom', 'preact'], options)
   .then(data => {
     /*
     [
@@ -58,6 +58,22 @@ getSizes(['vue', 'react,react-dom', 'preact'])
     */
   })
 ```
+
+### options
+
+#### es6
+
+Type: `boolean`<br>
+Default: `false`
+
+Compile ES6 to ES5 using `buble`.
+
+#### cwd
+
+Type: `boolean`<br>
+Default: `false`
+
+Resolve modules in current working directory instead of `~/.package-size-cache`
 
 ## Contributing
 
