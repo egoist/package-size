@@ -75,6 +75,19 @@ Default: `false`
 
 Resolve modules in current working directory instead of `~/.package-size-cache`
 
+#### externals
+
+Type: `string` or `Array<string|RegExp>`<br>
+Default: `undefined`
+
+The package to exclude from bundled file, for example, to get the bundle size of `styled-jsx/style` we need to exclude `react`:
+
+```bash
+package-size styled-jsx/style --externals react
+```
+
+Note that if some item in `externals` is provided as string, it will be converted to Regular Expression that starts with it. For example: `react` to `/^react/`
+
 ## Contributing
 
 1. Fork it!
