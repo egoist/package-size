@@ -28,10 +28,10 @@ package-size react,react-dom
 # get the size of vue react+react-dom preact bundles
 package-size vue react,react-dom preact
 
-# get the size of package in current working directory
-# it should be already installed or `require-able` in cwd
-package-size object-assign --cwd
-package-size ./dist/index.js --cwd
+# get the size of file in current working directory
+package-size ./dist/index.js
+# or a package in current working directory, explictly using `--cwd` flag
+package-size vue --cwd
 ```
 
 If the package contains ES6 code, please use `--es6` option, otherwise it will throw error.
