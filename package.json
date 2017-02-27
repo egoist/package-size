@@ -1,6 +1,6 @@
 {
   "name": "package-size",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "Get real size of an npm package after bundled.",
   "license": "MIT",
   "repository": "egoist/package-size",
