@@ -12,6 +12,8 @@ const pkg = require('./package.json')
 const cli = cac()
 
 cli.command('*', pkg.description, (input, flags) => {
+  if (input.length === 0) return cli.showHelp()
+
   const stats = input.map(name => ({
     name,
     size: -1,
