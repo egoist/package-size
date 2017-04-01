@@ -71,11 +71,21 @@ cli.parse()
 
 function handlerError(err) {
   if (err.name === 'WebpackOptionsValidationError') {
-    console.log(err.message)
+    stderr(err.message)
+  } else if (err.message.indexOf('from UglifyJs') > -1 && err.message.indexOf('Unexpected token') > -1) {
+    stderr('The package contains ES6+ code, please use `--es6` option')
   } else {
-    console.log(err.stack)
+    stderr(err.stack)
   }
+
   process.exit(1)
+}
+
+function stderr(msg) {
+  console.log()
+  console.log(`${chalk.bgRed.black(' ERROR ')} Compiled with errors!`)
+  console.log('\n' + msg)
+  console.log()
 }
 
 update({pkg: cli.pkg}).notify()
