@@ -13,7 +13,8 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "ava && xo"
+    "test": "ava && xo",
+    "fix": "xo --fix"
   },
   "bin": "cli.js",
   "main": "./lib/index.js",
@@ -31,8 +32,8 @@
     "gzip"
   ],
   "devDependencies": {
-    "ava": "^0.17.0",
-    "eslint-config-rem": "^2.0.2",
+    "ava": "^0.18.2",
+    "eslint-config-rem": "^3.0.0",
     "xo": "^0.18.1"
   },
   "jest": {

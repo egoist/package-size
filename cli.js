@@ -36,7 +36,7 @@ cli.command('*', pkg.description, (input, flags) => {
     result.unshift(['  package', 'size', 'minified', 'minified+gzipped'].map(v => chalk.bold(v)))
 
     console.log()
-    console.log(createTable(result, {stringLength: getWidth}))
+    console.log(createTable(result, { stringLength: getWidth }))
     console.log()
   }
 
@@ -88,4 +88,4 @@ function stderr(msg) {
   console.log()
 }
 
-update({pkg: cli.pkg}).notify()
+update({ pkg: cli.pkg }).notify()
