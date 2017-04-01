@@ -47,7 +47,13 @@ const getSizes = require('package-size')
 getSizes('react,react-dom', options)
   .then(data => {
     console.log(data)
-    //=> ['react,react-dom', '{size}', '{minified size}', '{gzipped size}']
+    //=>
+    {
+      name: 'react,react-dom',
+      size: '12023', // in bytes
+      minified: '2342',
+      gzipped: '534'
+    }
   })
 ```
 

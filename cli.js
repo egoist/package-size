@@ -20,15 +20,17 @@ cli.command('*', pkg.description, (input, flags) => {
     if (flags.sort) {
       result = result
         .sort((a, b) => {
-          return a[a.length - 1] > b[b.length - 1]
+          return a.gzipped > b.gzipped
         })
     }
 
     result = result.map(item => {
-      return item.map((_, i) => {
-        if (i === 0) return '  ' + chalk.yellow(_)
-        return prettyBytes(_)
-      })
+      return [
+        '  ' + chalk.yellow(item.name),
+        prettyBytes(item.size),
+        prettyBytes(item.minified),
+        prettyBytes(item.gzipped)
+      ]
     })
 
     result.unshift(['  package', 'size', 'minified', 'minified+gzipped'].map(v => chalk.bold(v)))
