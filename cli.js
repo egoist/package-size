@@ -3,20 +3,25 @@
 const cac = require('cac')
 const update = require('update-notifier')
 const chalk = require('chalk')
-const ora = require('ora')
 const createTable = require('text-table')
 const getWidth = require('string-width')
 const prettyBytes = require('pretty-bytes')
+const logUpdate = require('log-update')
 const pkg = require('./package.json')
 
 const cli = cac()
 
 cli.command('*', pkg.description, (input, flags) => {
-  const spinner = ora('Processing...')
-
-  let result = []
+  const stats = input.map(name => ({
+    name,
+    size: -1,
+    minified: -1,
+    gzipped: -1
+  }))
 
   const render = () => {
+    let result = [].concat(stats)
+
     if (flags.sort) {
       result = result
         .sort((a, b) => {
@@ -25,33 +30,34 @@ cli.command('*', pkg.description, (input, flags) => {
     }
 
     result = result.map(item => {
+      const prettify = v => v > 0 ?
+        prettyBytes(v) : chalk.dim('...')
+
       return [
         '  ' + chalk.yellow(item.name),
-        prettyBytes(item.size),
-        prettyBytes(item.minified),
-        prettyBytes(item.gzipped)
+        prettify(item.size),
+        prettify(item.minified),
+        prettify(item.gzipped)
       ]
     })
 
     result.unshift(['  package', 'size', 'minified', 'minified+gzipped'].map(v => chalk.bold(v)))
 
-    console.log()
-    console.log(createTable(result, { stringLength: getWidth }))
-    console.log()
-  }
+    const table = `\n${createTable(result, { stringLength: getWidth })}\n`
 
-  spinner.start()
+    logUpdate(table)
+  }
 
   const build = require('./lib')
 
-  Promise.all(input.map(name => {
-    return build(name, flags)
-  })).then(stats => {
-    result = stats
-    spinner.stop()
-    render()
-  }).catch(err => {
-    spinner.stop()
+  render()
+
+  Promise.all(input.map((name, index) => {
+    return build(name, flags).then(stat => {
+      stats[index] = stat
+      render()
+    })
+  })).catch(err => {
     handlerError(err)
   })
 })
