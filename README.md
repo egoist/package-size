@@ -32,30 +32,22 @@ package-size vue react,react-dom preact
 package-size ./dist/index.js
 # or a package in current working directory, explictly using `--cwd` flag
 package-size vue --cwd
+
+# or event multiple versions for the same package!
+package-size react@0.10 react@0.14 react@15
 ```
 
-If the package contains ES6 code, please use `--es6` option, otherwise it will throw error.
-
-## How does it work
-
-Packages will be cached at `~/.package-size-cache` and we use [yarn-install](https://github.com/egoist/yarn-install) to install them, if [Yarn](https://yarnpkg.com/) is not available on your machine, it automatically fallbacks to `npm install`.
-
-Something like `package-size react@0.14 react@15` will not work correctly, since they're installed at the same time, it's supposed to be one version for one package at a time. (PR for fixing this is welcome)
+If the package contains ES6 code, please use `--es6` option, otherwise it will throw error (uglifyjs can't parse ES6 code).
 
 ## API
 
 ```js
 const getSizes = require('package-size')
 
-getSizes(['vue', 'react,react-dom', 'preact'], options)
+getSizes('react,react-dom', options)
   .then(data => {
-    /*
-    [
-      ['vue', '{size}', '{minified size}', '{gzipped size}'],
-      ['react,react-dom', '{size}', '{minified size}', '{gzipped size}'],
-      ['preact', '{size}', '{minified size}', '{gzipped size}']
-    ]
-    */
+    console.log(data)
+    //=> ['react,react-dom', '{size}', '{minified size}', '{gzipped size}']
   })
 ```
 
@@ -68,12 +60,19 @@ Default: `false`
 
 Compile ES6 to ES5 using `buble`.
 
+#### sort
+
+Type: `boolean`<br>
+Default: `false`
+
+Sort packages in size (from small to large).
+
 #### cwd
 
 Type: `boolean`<br>
 Default: `false`
 
-Resolve modules in current working directory instead of `~/.package-size-cache`
+Resolve modules in current working directory instead of a cache folder. Relative path will set `cwd` to `true` by default.
 
 #### externals
 
