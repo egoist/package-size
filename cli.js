@@ -65,6 +65,8 @@ cli.command('*', pkg.description, (input, flags) => {
       render()
     })
   })).then(() => clearInterval(this.timer)).catch(err => {
+    clearInterval(this.timer)
+    logUpdate('')
     handlerError(err)
   })
 })
@@ -85,8 +87,8 @@ cli.parse()
 function handlerError(err) {
   if (err.name === 'WebpackOptionsValidationError') {
     stderr(err.message)
-  } else if (err.message.indexOf('from UglifyJs') > -1 && err.message.indexOf('Unexpected token') > -1) {
-    stderr('The package contains ES6+ code, please use `--es6` option')
+  } else if (err.message.indexOf('in prod.js from UglifyJs') > -1) {
+    stderr(`${err.message.trim()}\n\nThis package might contain ES6+ code, try using \`--es6\` option\n\nIf it's still happening, maybe this package is using some syntax that buble doesn't support.`)
   } else {
     stderr(err.stack)
   }
@@ -95,7 +97,6 @@ function handlerError(err) {
 }
 
 function stderr(msg) {
-  console.log()
   console.log(`${chalk.bgRed.black(' ERROR ')} Compiled with errors!`)
   console.log('\n' + msg)
   console.log()
