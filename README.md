@@ -64,7 +64,7 @@ getSizes('react,react-dom', options)
 Type: `boolean`<br>
 Default: `false`
 
-Compile ES6 to ES5 using `buble`.
+Respect `module` field in `package.json` and compile ES6 to ES5 using buble.
 
 #### sort
 
