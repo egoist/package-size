@@ -49,6 +49,7 @@
     "co": "^4.6.0",
     "compression-webpack-plugin": "^0.3.2",
     "execa": "^0.6.3",
+    "fs-promise": "^2.0.2",
     "lodash.find": "^4.6.0",
     "log-update": "^1.0.2",
     "memory-fs": "^0.4.1",
