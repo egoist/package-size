@@ -53,6 +53,7 @@
     "lodash.find": "^4.6.0",
     "log-update": "^1.0.2",
     "memory-fs": "^0.4.1",
+    "ora": "^1.2.0",
     "parse-package-name": "^0.1.0",
     "pretty-bytes": "^4.0.2",
     "rimraf": "^2.6.1",

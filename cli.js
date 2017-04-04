@@ -7,12 +7,15 @@ const createTable = require('text-table')
 const getWidth = require('string-width')
 const prettyBytes = require('pretty-bytes')
 const logUpdate = require('log-update')
+const ora = require('ora')
 const pkg = require('./package.json')
 
 const cli = cac()
 
 cli.command('*', pkg.description, (input, flags) => {
   if (input.length === 0) return cli.showHelp()
+
+  const spinner = ora({ spinner: 'simpleDotsScrolling' })
 
   const stats = input.map(name => ({
     name,
@@ -31,9 +34,11 @@ cli.command('*', pkg.description, (input, flags) => {
         })
     }
 
+    const frame = spinner.frame()
+
     result = result.map(item => {
       const prettify = v => v > 0 ?
-        prettyBytes(v) : chalk.dim('...')
+        prettyBytes(v) : frame
 
       return [
         '  ' + chalk.yellow(item.name),
@@ -52,14 +57,14 @@ cli.command('*', pkg.description, (input, flags) => {
 
   const build = require('./lib')
 
-  render()
+  this.timer = setInterval(render, 100)
 
   Promise.all(input.map((name, index) => {
     return build(name, flags).then(stat => {
       stats[index] = stat
       render()
     })
-  })).catch(err => {
+  })).then(() => clearInterval(this.timer)).catch(err => {
     handlerError(err)
   })
 })
