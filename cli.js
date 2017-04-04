@@ -66,7 +66,6 @@ cli.command('*', pkg.description, (input, flags) => {
     })
   })).then(() => clearInterval(this.timer)).catch(err => {
     clearInterval(this.timer)
-    logUpdate('')
     handlerError(err)
   })
 })
@@ -85,6 +84,8 @@ cli.example(`${chalk.yellow('package-size')} vue@1 angular@1 react@0.14`)
 cli.parse()
 
 function handlerError(err) {
+  logUpdate('')
+
   if (err.name === 'WebpackOptionsValidationError') {
     stderr(err.message)
   } else if (err.message.indexOf('in prod.js from UglifyJs') > -1) {
