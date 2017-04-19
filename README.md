@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-<img src="./media/preview.png" alt="preview" width="700">
+<img src="./media/preview.gif" alt="preview" width="700">
 </p>
 
 ## Install
