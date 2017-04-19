@@ -48,7 +48,7 @@ cli.command('*', pkg.description, (input, flags) => {
       ]
     })
 
-    result.unshift(['  package', 'size', 'minified', 'minified+gzipped'].map(v => chalk.bold(v)))
+    result.unshift(['  package', 'size', 'minified', 'gzipped'].map(v => chalk.bold(v)))
 
     const table = `\n${createTable(result, { stringLength: getWidth })}\n`
 
