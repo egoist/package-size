@@ -28,17 +28,15 @@ cli.command('*', pkg.description, (input, flags) => {
     let result = [].concat(stats)
 
     if (flags.sort) {
-      result = result
-        .sort((a, b) => {
-          return a.gzipped > b.gzipped
-        })
+      result = result.sort((a, b) => {
+        return a.gzipped > b.gzipped
+      })
     }
 
     const frame = spinner.frame()
 
     result = result.map(item => {
-      const prettify = v => v > 0 ?
-        prettyBytes(v) : frame
+      const prettify = v => (v > 0 ? prettyBytes(v) : frame)
 
       return [
         '  ' + chalk.yellow(item.name),
@@ -48,7 +46,9 @@ cli.command('*', pkg.description, (input, flags) => {
       ]
     })
 
-    result.unshift(['  package', 'size', 'minified', 'gzipped'].map(v => chalk.bold(v)))
+    result.unshift(
+      ['  package', 'size', 'minified', 'gzipped'].map(v => chalk.bold(v))
+    )
 
     const table = `\n${createTable(result, { stringLength: getWidth })}\n`
 
@@ -59,15 +59,19 @@ cli.command('*', pkg.description, (input, flags) => {
 
   this.timer = setInterval(render, 100)
 
-  Promise.all(input.map((name, index) => {
-    return build(name, flags).then(stat => {
-      stats[index] = stat
-      render()
+  Promise.all(
+    input.map((name, index) => {
+      return build(name, flags).then(stat => {
+        stats[index] = stat
+        render()
+      })
     })
-  })).then(() => clearInterval(this.timer)).catch(err => {
-    clearInterval(this.timer)
-    handlerError(err)
-  })
+  )
+    .then(() => clearInterval(this.timer))
+    .catch(err => {
+      clearInterval(this.timer)
+      handlerError(err)
+    })
 })
 
 cli.option('es6', 'Compile the input package down to ES5')
@@ -76,7 +80,9 @@ cli.option('externals', 'Exclude packages from bundled file')
 cli.option('sort', 'Sort packages from small to big bundle size')
 
 cli.example(`${chalk.yellow('package-size')} react,react-dom`)
-cli.example(`${chalk.yellow('package-size')} styled-jsx/style --externals react`)
+cli.example(
+  `${chalk.yellow('package-size')} styled-jsx/style --externals react`
+)
 cli.example(`${chalk.yellow('package-size')} ./dist/my-bundle.js`)
 cli.example(`${chalk.yellow('package-size')} local-package --cwd`)
 cli.example(`${chalk.yellow('package-size')} vue@1 angular@1 react@0.14`)
@@ -89,7 +95,9 @@ function handlerError(err) {
   if (err.name === 'WebpackOptionsValidationError') {
     stderr(err.message)
   } else if (err.message.indexOf('in prod.js from UglifyJs') > -1) {
-    stderr(`${err.message.trim()}\n\nThis package might contain ES6+ code, try using \`--es6\` option\n\nIf it's still happening, maybe this package is using some syntax that buble doesn't support.`)
+    stderr(
+      `${err.message.trim()}\n\nThis package might contain ES6+ code, try using \`--es6\` option\n\nIf it's still happening, maybe this package is using some syntax that buble doesn't support.`
+    )
   } else {
     stderr(err.stack)
   }
