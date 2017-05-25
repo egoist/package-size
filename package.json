@@ -56,7 +56,6 @@
     "ora": "^1.2.0",
     "parse-package-name": "^0.1.0",
     "pretty-bytes": "^4.0.2",
-    "rimraf": "^2.6.1",
     "string-width": "^2.0.0",
     "text-table": "^0.2.0",
     "update-notifier": "^1.0.3",
