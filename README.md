@@ -18,6 +18,8 @@ yarn global add package-size
 
 ## Usage
 
+The package is bundled with Webpack.
+
 ```bash
 # get the size of vue bundle
 package-size vue
