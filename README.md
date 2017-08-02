@@ -30,6 +30,9 @@ package-size react,react-dom
 # get the size of vue react+react-dom preact bundles
 package-size vue react,react-dom preact
 
+# get the size of react+react-dom without using the cache
+package-size react,react-dom --no-cache
+
 # get the size of file in current working directory
 package-size ./dist/index.js
 # or a package in current working directory, explictly using `--cwd` flag
@@ -94,6 +97,13 @@ package-size styled-jsx/style --externals react
 ```
 
 Note that if some item in `externals` is provided as string, it will be wrapped in a regular expression. For example: `react` is treated as `/^react$/`
+
+#### cache
+
+Type: `boolean`<br>
+Default: `true`
+
+If `cache` is set to `false`, then package-size will not use cached build sizes. To use this from the CLI, pass `--no-cache` as an argument.
 
 ## Contributing
 

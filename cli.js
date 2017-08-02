@@ -9,8 +9,14 @@ const prettyBytes = require('pretty-bytes')
 const logUpdate = require('log-update')
 const ora = require('ora')
 const pkg = require('./package.json')
+const Conf = require("conf");
 
 const cli = cac()
+
+cli.command('clear-cache', 'Clear the package size cache.', () => {
+  const cache = new Conf();
+  cache.clear();
+})
 
 cli.command('*', pkg.description, (input, flags) => {
   if (input.length === 0) return cli.showHelp()
@@ -78,6 +84,7 @@ cli.option('es6', 'Compile the input package down to ES5')
 cli.option('cwd', 'Bundle package in current working directory')
 cli.option('externals', 'Exclude packages from bundled file')
 cli.option('sort', 'Sort packages from small to big bundle size')
+cli.option('no-cache', 'Disable module size caching')
 
 cli.example(`${chalk.yellow('package-size')} react,react-dom`)
 cli.example(
