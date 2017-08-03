@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 const cac = require('cac')
+const fs = require('fs-extra')
 const update = require('update-notifier')
 const chalk = require('chalk')
 const createTable = require('text-table')
@@ -73,6 +74,20 @@ cli.command('*', pkg.description, (input, flags) => {
     })
   )
     .then(() => clearInterval(this.timer))
+    .then(() => {
+      if (flags.output) {
+        const outputFile = typeof flags.output === 'string'
+          ? flags.output
+          : 'package-size-output.json'
+        return fs
+          .writeFile(outputFile, JSON.stringify(stats, null, 2), 'utf8')
+          .then(() => {
+            console.log(
+              `> Results have been saved to ${outputFile} in JSON format.`
+            )
+          })
+      }
+    })
     .catch(err => {
       clearInterval(this.timer)
       handlerError(err)
@@ -84,6 +99,7 @@ cli.option('cwd', 'Bundle package in current working directory')
 cli.option('externals', 'Exclude packages from bundled file')
 cli.option('sort', 'Sort packages from small to big bundle size')
 cli.option('no-cache', 'Disable module size caching')
+cli.option('output', 'Save results to file system in JSON format')
 
 // cli.example(`${chalk.yellow('package-size')} react,react-dom`)
 // cli.example(

@@ -40,6 +40,12 @@ package-size vue --cwd
 
 # or event multiple versions for the same package!
 package-size react@0.10 react@0.14 react@15
+
+# save results to file system in JSON format
+# defaults to ./package-size-output.json
+package-size cherow --output
+# or custom path
+package-size cherow --output stats.json
 ```
 
 If the package contains ES6 code, please use `--es6` option, otherwise it will throw error (uglifyjs can't parse ES6 code).
