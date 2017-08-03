@@ -44,7 +44,7 @@ cli.command('*', pkg.description, (input, flags) => {
       const prettify = v => (v > 0 ? prettyBytes(v) : frame)
 
       return [
-        '  ' + chalk.yellow(item.name),
+        `  ${chalk.yellow(item.versionedName || item.name)}`,
         prettify(item.size),
         prettify(item.minified),
         prettify(item.gzipped)
