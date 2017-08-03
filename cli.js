@@ -8,14 +8,13 @@ const getWidth = require('string-width')
 const prettyBytes = require('pretty-bytes')
 const logUpdate = require('log-update')
 const ora = require('ora')
+const cache = require('./lib/cache')
 const pkg = require('./package.json')
-const Conf = require("conf");
 
 const cli = cac()
 
 cli.command('clear-cache', 'Clear the package size cache.', () => {
-  const cache = new Conf();
-  cache.clear();
+  cache.clear()
 })
 
 cli.command('*', pkg.description, (input, flags) => {
