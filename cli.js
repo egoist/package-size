@@ -8,9 +8,14 @@ const getWidth = require('string-width')
 const prettyBytes = require('pretty-bytes')
 const logUpdate = require('log-update')
 const ora = require('ora')
+const cache = require('./lib/cache')
 const pkg = require('./package.json')
 
 const cli = cac()
+
+cli.command('clear-cache', 'Clear the package size cache.', () => {
+  cache.clear()
+})
 
 cli.command('*', pkg.description, (input, flags) => {
   if (input.length === 0) return cli.showHelp()
@@ -39,7 +44,7 @@ cli.command('*', pkg.description, (input, flags) => {
       const prettify = v => (v > 0 ? prettyBytes(v) : frame)
 
       return [
-        '  ' + chalk.yellow(item.name),
+        `  ${chalk.yellow(item.versionedName || item.name)}`,
         prettify(item.size),
         prettify(item.minified),
         prettify(item.gzipped)
@@ -78,6 +83,7 @@ cli.option('es6', 'Compile the input package down to ES5')
 cli.option('cwd', 'Bundle package in current working directory')
 cli.option('externals', 'Exclude packages from bundled file')
 cli.option('sort', 'Sort packages from small to big bundle size')
+cli.option('no-cache', 'Disable module size caching')
 
 cli.example(`${chalk.yellow('package-size')} react,react-dom`)
 cli.example(
