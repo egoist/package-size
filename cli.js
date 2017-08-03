@@ -85,13 +85,13 @@ cli.option('externals', 'Exclude packages from bundled file')
 cli.option('sort', 'Sort packages from small to big bundle size')
 cli.option('no-cache', 'Disable module size caching')
 
-cli.example(`${chalk.yellow('package-size')} react,react-dom`)
-cli.example(
-  `${chalk.yellow('package-size')} styled-jsx/style --externals react`
-)
-cli.example(`${chalk.yellow('package-size')} ./dist/my-bundle.js`)
-cli.example(`${chalk.yellow('package-size')} local-package --cwd`)
-cli.example(`${chalk.yellow('package-size')} vue@1 angular@1 react@0.14`)
+// cli.example(`${chalk.yellow('package-size')} react,react-dom`)
+// cli.example(
+//   `${chalk.yellow('package-size')} styled-jsx/style --externals react`
+// )
+// cli.example(`${chalk.yellow('package-size')} ./dist/my-bundle.js`)
+// cli.example(`${chalk.yellow('package-size')} local-package --cwd`)
+// cli.example(`${chalk.yellow('package-size')} vue@1 angular@1 react@0.14`)
 
 cli.parse()
 
