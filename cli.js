@@ -129,10 +129,6 @@ function handlerError(err) {
 
   if (err.name === 'WebpackOptionsValidationError') {
     stderr(err.message)
-  } else if (err.message.indexOf('in prod.js from UglifyJs') > -1) {
-    stderr(
-      `${err.message.trim()}\n\nThis package might contain ES6+ code, try using \`--es6\` option\n\nIf it's still happening, maybe this package is using some syntax that buble doesn't support.`
-    )
   } else {
     stderr(err.stack)
   }
