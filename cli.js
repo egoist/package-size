@@ -21,6 +21,10 @@ cli.command('clear-cache', 'Clear the package size cache.', () => {
 cli.command('*', pkg.description, (input, flags) => {
   if (input.length === 0) return cli.showHelp()
 
+  if (flags.debug) {
+    process.env.DEBUG = 'package-size'
+  }
+
   const spinner = ora({ spinner: 'simpleDotsScrolling' })
 
   const stats = input.map(name => ({
@@ -29,6 +33,8 @@ cli.command('*', pkg.description, (input, flags) => {
     minified: -1,
     gzipped: -1
   }))
+
+  let finalTable
 
   const render = () => {
     let result = [].concat(stats)
@@ -58,7 +64,11 @@ cli.command('*', pkg.description, (input, flags) => {
 
     const table = `\n${createTable(result, { stringLength: getWidth })}\n`
 
-    logUpdate(table)
+    if (!flags.debug) {
+      logUpdate(table)
+    }
+
+    finalTable = table
   }
 
   const build = require('./lib')
@@ -75,6 +85,9 @@ cli.command('*', pkg.description, (input, flags) => {
   )
     .then(() => clearInterval(this.timer))
     .then(() => {
+      if (flags.debug) {
+        console.log(finalTable)
+      }
       if (flags.output) {
         const outputFile = typeof flags.output === 'string'
           ? flags.output
@@ -94,7 +107,7 @@ cli.command('*', pkg.description, (input, flags) => {
     })
 })
 
-cli.option('es6', 'Compile the input package down to ES5')
+cli.option('debug', 'Show debug output')
 cli.option('cwd', 'Bundle package in current working directory')
 cli.option('externals', 'Exclude packages from bundled file')
 cli.option('sort', 'Sort packages from small to big bundle size')

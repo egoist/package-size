@@ -48,8 +48,6 @@ package-size cherow --output
 package-size cherow --output stats.json
 ```
 
-If the package contains ES6 code, please use `--es6` option, otherwise it will throw error (uglifyjs can't parse ES6 code).
-
 ## API
 
 ```js
@@ -69,13 +67,6 @@ getSizes('react,react-dom', options)
 ```
 
 ### options
-
-#### es6
-
-Type: `boolean`<br>
-Default: `false`
-
-Respect `module` field in `package.json` and compile ES6 to ES5 using buble.
 
 #### sort
 
