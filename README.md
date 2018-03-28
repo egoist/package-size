@@ -61,7 +61,8 @@ getSizes('react,react-dom', options)
       name: 'react,react-dom',
       size: 12023, // in bytes
       minified: 2342,
-      gzipped: 534
+      gzipped: 534,
+      versionedName: 'react@16.0.0,react-dom@16.0.0'
     }
   })
 ```
