@@ -10,6 +10,12 @@
 <img src="./media/preview.gif" alt="preview" width="700">
 </p>
 
+## How does this work?
+
+1. Install the packages with yarn or npm in a temp directory
+2. Bundle the packages with webpack and get the bundle size
+3. Show you the bundle size and cache it by package version
+
 ## Install
 
 ```bash
