@@ -1,6 +1,6 @@
 {
   "name": "package-size",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Get real size of an npm package after bundled.",
   "license": "MIT",
   "repository": "egoist/package-size",
@@ -41,7 +41,9 @@
   },
   "xo": {
     "extends": "rem/prettier",
-    "envs": ["jest"]
+    "envs": [
+      "jest"
+    ]
   },
   "dependencies": {
     "bytes": "^3.0.0",
