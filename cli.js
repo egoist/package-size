@@ -6,7 +6,7 @@ const update = require('update-notifier')
 const chalk = require('chalk')
 const createTable = require('text-table')
 const getWidth = require('string-width')
-const prettyBytes = require('pretty-bytes')
+const bytes = require('bytes')
 const logUpdate = require('log-update')
 const ora = require('ora')
 const cache = require('./lib/cache')
@@ -23,6 +23,10 @@ cli.command('*', pkg.description, (input, flags) => {
 
   if (flags.debug) {
     process.env.DEBUG = 'package-size'
+  }
+
+  if (flags.analyze) {
+    return require('./lib')(input.join(','), flags)
   }
 
   const spinner = ora({ spinner: 'simpleDotsScrolling' })
@@ -48,7 +52,7 @@ cli.command('*', pkg.description, (input, flags) => {
     const frame = spinner.frame()
 
     result = result.map(item => {
-      const prettify = v => (v > 0 ? prettyBytes(v) : frame)
+      const prettify = v => (v > 0 ? bytes(v, { unitSeparator: ' ' }) : frame)
 
       return [
         `  ${chalk.yellow(item.versionedName || item.name)}`,
@@ -113,6 +117,7 @@ cli.option('externals', 'Exclude packages from bundled file')
 cli.option('sort', 'Sort packages from small to big bundle size')
 cli.option('no-cache', 'Disable module size caching')
 cli.option('output', 'Save results to file system in JSON format')
+cli.option('analyze', 'Analyze bundled files')
 
 // cli.example(`${chalk.yellow('package-size')} react,react-dom`)
 // cli.example(

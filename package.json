@@ -13,7 +13,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "ava && xo",
+    "test": "jest && xo",
     "fix": "xo --fix"
   },
   "bin": "cli.js",
@@ -32,17 +32,19 @@
     "gzip"
   ],
   "devDependencies": {
-    "ava": "^0.21.0",
     "eslint-config-rem": "^3.2.0",
+    "jest": "^22.4.3",
     "xo": "^0.18.2"
   },
   "jest": {
     "testEnvironment": "node"
   },
   "xo": {
-    "extends": "rem/prettier"
+    "extends": "rem/prettier",
+    "envs": ["jest"]
   },
   "dependencies": {
+    "bytes": "^3.0.0",
     "cac": "^4.2.0",
     "chalk": "^1.1.3",
     "co": "^4.6.0",
@@ -56,12 +58,12 @@
     "memory-fs": "^0.4.1",
     "ora": "^1.3.0",
     "parse-package-name": "^0.1.0",
-    "pretty-bytes": "^4.0.2",
     "string-width": "^2.0.0",
     "text-table": "^0.2.0",
     "update-notifier": "^1.0.3",
     "user-home": "^2.0.0",
     "webpack": "^4.2.0",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-merge": "^4.1.2"
   }
 }

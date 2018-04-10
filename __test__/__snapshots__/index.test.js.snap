@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`main 1`] = `
+Object {
+  "gzipped": 27051,
+  "minified": 74283,
+  "name": "vue@2.0.0",
+  "size": 189575,
+  "versionedName": "vue@2.0.0",
+}
+`;

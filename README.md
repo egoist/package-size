@@ -52,6 +52,9 @@ package-size react@0.10 react@0.14 react@15
 package-size cherow --output
 # or custom path
 package-size cherow --output stats.json
+
+# analyze bundle with webpack-bundle-analyzer
+package-size cherow --analyze
 ```
 
 ## API
