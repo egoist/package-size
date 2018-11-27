@@ -7157,3 +7157,10 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+yarn-global@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/yarn-global/-/yarn-global-1.1.0.tgz#ab2a050c51347fc83988b335557709b9f1fdfc08"
+  integrity sha1-qyoFDFE0f8g5iLM1VXcJufH9/Ag=
+  dependencies:
+    user-home "^2.0.0"
