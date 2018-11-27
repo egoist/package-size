@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 'use strict'
 const cac = require('cac')
 const fs = require('fs-extra')
@@ -14,12 +15,15 @@ const pkg = require('./package.json')
 
 const cli = cac()
 
-cli.command('clear-cache', 'Clear the package size cache.', () => {
+cli.command('clear-cache', 'Clear the package size cache.')
+.action(() => {
   cache.clear()
+  console.log('Done!')
 })
 
-cli.command('*', pkg.description, (input, flags) => {
-  if (input.length === 0) return cli.showHelp()
+cli.command('[...packages]', pkg.description)
+.action((input, flags) => {
+  if (input.length === 0) return cli.outputHelp()
 
   if (flags.debug) {
     process.env.DEBUG = 'package-size'
@@ -110,22 +114,23 @@ cli.command('*', pkg.description, (input, flags) => {
       handlerError(err)
     })
 })
+.option('--debug', 'Show debug output')
+.option('--cwd', 'Bundle package in current working directory')
+.option('--externals <externals>', 'Exclude packages from bundled file')
+.option('--sort', 'Sort packages from small to big bundle size')
+.option('--no-cache', 'Disable module size caching')
+.option('--output', 'Save results to file system in JSON format')
+.option('--analyze', 'Analyze bundled files')
+.example(`  package-size react,react-dom`)
+.example(
+  `  package-size styled-jsx/style --externals react`
+)
+.example(`  package-size ./dist/my-bundle.js`)
+.example(`  package-size local-package --cwd`)
+.example(`  package-size vue@1 angular@1 react@0.14`)
 
-cli.option('debug', 'Show debug output')
-cli.option('cwd', 'Bundle package in current working directory')
-cli.option('externals', 'Exclude packages from bundled file')
-cli.option('sort', 'Sort packages from small to big bundle size')
-cli.option('no-cache', 'Disable module size caching')
-cli.option('output', 'Save results to file system in JSON format')
-cli.option('analyze', 'Analyze bundled files')
-
-// cli.example(`${chalk.yellow('package-size')} react,react-dom`)
-// cli.example(
-//   `${chalk.yellow('package-size')} styled-jsx/style --externals react`
-// )
-// cli.example(`${chalk.yellow('package-size')} ./dist/my-bundle.js`)
-// cli.example(`${chalk.yellow('package-size')} local-package --cwd`)
-// cli.example(`${chalk.yellow('package-size')} vue@1 angular@1 react@0.14`)
+cli.version(pkg.version)
+cli.help()
 
 cli.parse()
 
@@ -147,4 +152,4 @@ function stderr(msg) {
   console.log()
 }
 
-update({ pkg: cli.pkg }).notify()
+update({ pkg }).notify()

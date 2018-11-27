@@ -112,6 +112,14 @@ Default: `true`
 
 If `cache` is set to `false`, then package-size will not use cached build sizes. To use this from the CLI, pass `--no-cache` as an argument.
 
+#### target
+
+Type: `string`<br>
+Default: `browser`
+Values: `browser` `node`
+
+Build target. In `node` target, all node_modules will be excluded and output format is set to CommonJS.
+
 ## Contributing
 
 1. Fork it!
