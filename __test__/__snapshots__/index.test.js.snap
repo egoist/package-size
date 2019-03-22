@@ -5,7 +5,6 @@ Object {
   "gzipped": 27163,
   "minified": 74668,
   "name": "vue@2.0.0",
-  "size": 189620,
   "versionedName": "vue@2.0.0",
 }
 `;
