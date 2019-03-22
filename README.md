@@ -123,9 +123,9 @@ Build target. In `node` target, all node_modules will be excluded and output for
 #### registry
 
 Type: `string`<br>
-Default: `[browser](https://registry.npmjs.org)`
+Default: `undefined`
 
-npm registry to install the package from.
+npm registry to install the package from. By default it uses the default npm registry.
 
 ## Contributing
 
