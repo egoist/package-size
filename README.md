@@ -55,6 +55,8 @@ package-size cherow --output stats.json
 
 # analyze bundle with webpack-bundle-analyzer
 package-size cherow --analyze
+# analyze bundle with webpack-bundle-analyzer on a different port
+package-size cherow --analyze --port 9000
 ```
 
 ## API
