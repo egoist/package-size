@@ -120,6 +120,13 @@ Values: `browser` `node`
 
 Build target. In `node` target, all node_modules will be excluded and output format is set to CommonJS.
 
+#### registry
+
+Type: `string`<br>
+Default: `undefined`
+
+npm registry to install the package from. By default it uses the default npm registry.
+
 ## Contributing
 
 1. Fork it!
