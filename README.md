@@ -131,7 +131,7 @@ npm registry to install the package from. By default it uses the default npm reg
 
 #### resolve
 
-Type: `string`<br>
+Type: `string` `string[]`<br>
 Default: `undefined`
 
 Extra folders to resolve local node_modules from.
