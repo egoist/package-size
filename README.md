@@ -129,6 +129,13 @@ Default: `undefined`
 
 npm registry to install the package from. By default it uses the default npm registry.
 
+#### resolve
+
+Type: `string` `string[]`<br>
+Default: `undefined`
+
+Extra folders to resolve local node_modules from.
+
 ## Contributing
 
 1. Fork it!

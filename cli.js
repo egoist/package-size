@@ -123,6 +123,10 @@ cli
   .option('--analyze', 'Analyze bundled files')
   .option('--port <port>', 'Port to start analyze on. Defaults to 8888')
   .option('--registry <registry>', 'npm registry URL to install from')
+  .option(
+    '--resolve <directory>',
+    'Extra folders to resolve local node_modules from'
+  )
   .example(`  package-size react,react-dom`)
   .example(`  package-size styled-jsx/style --externals react`)
   .example(`  package-size ./dist/my-bundle.js`)
