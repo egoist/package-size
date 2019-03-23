@@ -124,7 +124,7 @@ cli
   .option('--port <port>', 'Port to start analyze on. Defaults to 8888')
   .option('--registry <registry>', 'npm registry URL to install from')
   .option(
-    '--resolve [resolve]',
+    '--resolve <directory>',
     'Extra folders to resolve local node_modules from'
   )
   .example(`  package-size react,react-dom`)
